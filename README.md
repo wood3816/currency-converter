@@ -1,47 +1,41 @@
-# 手機貨幣轉換器 v1.2.1 — GitHub Pages 版
+# 手機貨幣轉換器 v1.2.2 — GitHub Pages 版
 
-這一版已從 **Netlify** 改成 **GitHub Pages + GitHub Actions** 管道，不再需要 Netlify Function，也不會出現 Powered by Netlify 徽章。
+這一版已依你最後確認的深色版面配置重新整理並打包，部署平台為 **GitHub Pages**。
 
-## 架構
+## 版面重點
+- 採用你最後確認的深色霓虹風版面。
+- 上方保留：左側選單、中央標題、版本晶片、右側重新整理圖示。
+- 兩個幣別區塊維持你指定的比例與排列。
+- 幣別欄固定三層顯示：**國旗 → 中文幣別 → 英文代碼**。
+- 金額欄採大字顯示、靠右對齊、支援千分位。
+- 轉換後結果固定顯示 **小數點後 2 位**。
+- 匯率來源資訊列使用 **銀行建築圖示**，顯示中央銀行 / Frankfurter 與更新時間、資料狀態。
+- 下方為自訂數字鍵盤與功能鍵：刪除、交換幣別、乘除單位數、清除。
+- 深色 / 淺色 / 跟隨系統模式保留。
 
-- 前端：GitHub Pages 靜態網站。
-- 主流幣別：GitHub Actions 先向台灣中央銀行統計資料庫 BP01D01 取得資料。
-- 其他幣別：Frankfurter v2 公開 API。
-- 匯率更新：`.github/workflows/pages.yml` 每 **2 小時**執行一次，重新產生 `data/rates.json` 並部署 GitHub Pages。
-- 中央銀行 API 暫時失敗時：Actions 會改用 Frankfurter 的 CBC provider 備援。
-- 手機離線：網站仍會把最後成功取得的匯率存進 localStorage，Service Worker 也會快取介面。
+## 匯率與更新
+- 主流幣別：以台灣中央銀行資料為主。
+- 其他幣別：使用 Frankfurter 公開匯率 API。
+- GitHub Actions 每 2 小時自動更新 `data/rates.json`。
+- 手機端保留離線快取，沒網路時可使用最後一次成功更新的資料。
 
-## 第一次部署
+## GitHub Pages 內容
+專案已包含：
+- `index.html`
+- `styles.css`
+- `app.js`
+- `manifest.webmanifest`
+- `sw.js`
+- `data/rates.json`
+- `scripts/update-rates.mjs`
+- `.github/workflows/pages.yml`
+- `.nojekyll`
+- `icons/`
 
-1. 在 GitHub 建立一個新的 repository，例如 `currency-converter`。
-2. 解壓縮本程式包，把 **資料夾內所有檔案**上傳到 repository 的 `main` 分支根目錄。務必包含隱藏資料夾 `.github`。
-3. GitHub repository → **Settings → Pages**。
-4. 在 **Build and deployment → Source** 選擇 **GitHub Actions**。
-5. 到 **Actions** 頁籤，等待 `Deploy currency converter to GitHub Pages` 完成；也可以按 `Run workflow` 手動執行一次。
-6. 部署成功後，Pages 頁面會顯示你的網址，通常是：
-   `https://你的帳號.github.io/currency-converter/`
+## 部署提示
+1. 將整個資料夾內容上傳到 GitHub repository 根目錄。
+2. 確認 `.github/workflows/pages.yml` 已上傳。
+3. 到 **Settings → Pages → Source** 選擇 **GitHub Actions**。
+4. 提交後會自動執行 `Deploy currency converter to GitHub Pages`。
 
-## 重要
-
-- 不要再上傳到 Netlify；這包已經完全不需要 `netlify.toml` 或 `netlify/functions`。
-- `data/rates.json` 在程式包中只是初始占位檔；每次 GitHub Actions 部署前會自動重新取得真正匯率。
-- GitHub Actions 排程為每 2 小時一次；GitHub 的排程執行時間可能不是精準到分鐘，但不影響 App 使用最後一筆有效匯率。
-- 若要立刻更新匯率：GitHub → Actions → 選擇工作流程 → **Run workflow**。
-- App 裡的重新整理按鈕會重新抓取目前 GitHub Pages 上最新的 `data/rates.json`；若 Actions 尚未產生新資料，仍會使用現有資料或本機快取。
-
-## 主要檔案
-
-- `index.html`：畫面
-- `styles.css`：版面與深淺色主題
-- `app.js`：換算、離線與操作邏輯
-- `data/rates.json`：Actions 產生的匯率檔
-- `scripts/update-rates.mjs`：取得中央銀行與 Frankfurter 匯率
-- `.github/workflows/pages.yml`：每 2 小時更新＋GitHub Pages 部署
-- `sw.js`：PWA 離線快取
-- `manifest.webmanifest`：PWA 設定
-
-## v1.2.1 GitHub Actions 修正
-- 修正 CBC provider API 路徑，改用 Frankfurter 官方文件的 `/v2/providers/cbc/rates?base=USD`。
-- 若 CBC provider 暫時失效，不再讓整個 Pages build 直接失敗，會先以 Frankfurter 一般匯率備援。
-- 若遠端來源暫時全部失效且 repository 已有可用 `data/rates.json`，會沿用舊資料完成部署。
-- 瀏覽器端直接備援 URL 同步修正。
+若要手動觸發，可到 **Actions** 裡執行 workflow。

@@ -1,12 +1,12 @@
 (() => {
   'use strict';
 
-  const APP_VERSION = '1.2.1';
+  const APP_VERSION = '1.2.2';
   const RATE_TTL_MS = 2 * 60 * 60 * 1000;
-  const CACHE_KEY = 'fx-rate-cache-gh-v2';
-  const LEGACY_CACHE_KEY = 'fx-rate-cache-gh-v1';
-  const PREF_KEY = 'fx-user-prefs-gh-v1';
-  const LEGACY_PREF_KEY = 'fx-user-prefs-v9';
+  const CACHE_KEY = 'fx-rate-cache-gh-v3';
+  const LEGACY_CACHE_KEY = 'fx-rate-cache-gh-v2';
+  const PREF_KEY = 'fx-user-prefs-gh-v2';
+  const LEGACY_PREF_KEY = 'fx-user-prefs-gh-v1';
   const PRIMARY_API_URL = './data/rates.json';
   const DIRECT_CBC_FALLBACK = 'https://api.frankfurter.dev/v2/providers/cbc/rates?base=USD';
   const DIRECT_FRANKFURTER = 'https://api.frankfurter.dev/v2/rates?base=USD';
