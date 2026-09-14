@@ -1,41 +1,28 @@
-# 手機貨幣轉換器 v1.2.2 — GitHub Pages 版
+# 手機貨幣轉換器 v1.2.4 — GitHub Pages 版
 
-這一版已依你最後確認的深色版面配置重新整理並打包，部署平台為 **GitHub Pages**。
+此版依你最後確認的效果圖重新校正版面比例，特別針對 iPhone / 約 6–6.7 吋直式手機調整，避免之前實機畫面與效果圖比例差異過大。
 
-## 版面重點
-- 採用你最後確認的深色霓虹風版面。
-- 上方保留：左側選單、中央標題、版本晶片、右側重新整理圖示。
-- 兩個幣別區塊維持你指定的比例與排列。
-- 幣別欄固定三層顯示：**國旗 → 中文幣別 → 英文代碼**。
-- 金額欄採大字顯示、靠右對齊、支援千分位。
-- 轉換後結果固定顯示 **小數點後 2 位**。
-- 匯率來源資訊列使用 **銀行建築圖示**，顯示中央銀行 / Frankfurter 與更新時間、資料狀態。
-- 下方為自訂數字鍵盤與功能鍵：刪除、交換幣別、乘除單位數、清除。
-- 深色 / 淺色 / 跟隨系統模式保留。
+## v1.2.4 版面修正
+- 幣別欄改窄、金額欄明顯加寬，更接近最後確認效果圖。
+- 「從貨幣 / 到貨幣」仍固定三層：**國旗 → 中文幣別 → 英文代碼**。
+- 兩個金額框都固定使用藍色外框與微光效果。
+- 金額維持大字、千分位、靠右；過長時兩欄同步縮小避免溢出。
+- 轉換結果固定小數點後 2 位。
+- 中間匯率來源列重新壓縮比例，降低中央銀行資訊被切成 3–4 行的情況。
+- 移除重複底部 Safe Area 留白，讓鍵盤更接近畫面底部並填滿可用高度。
+- 數字鍵盤與右側功能鍵比例依最後效果圖重新調整。
+- 深色 / 淺色 / 跟隨系統模式、長按輸入、交換幣別、乘除單位數功能全部保留。
 
-## 匯率與更新
-- 主流幣別：以台灣中央銀行資料為主。
-- 其他幣別：使用 Frankfurter 公開匯率 API。
-- GitHub Actions 每 2 小時自動更新 `data/rates.json`。
-- 手機端保留離線快取，沒網路時可使用最後一次成功更新的資料。
+## 匯率架構
+- 主流幣別：台灣中央銀行資料為主。
+- 其他幣別：Frankfurter 公開匯率 API。
+- GitHub Actions 每 2 小時更新一次 `data/rates.json`。
+- 手機端保留 localStorage 與 Service Worker 離線快取。
 
-## GitHub Pages 內容
-專案已包含：
-- `index.html`
-- `styles.css`
-- `app.js`
-- `manifest.webmanifest`
-- `sw.js`
-- `data/rates.json`
-- `scripts/update-rates.mjs`
-- `.github/workflows/pages.yml`
-- `.nojekyll`
-- `icons/`
+## GitHub Pages 部署
+1. 將本資料夾的**全部內容**覆蓋上傳到 repository 根目錄。
+2. `.github/workflows/pages.yml` 與 `.nojekyll` 一定要保留。
+3. GitHub：**Settings → Pages → Source → GitHub Actions**。
+4. Commit 到 `main` 後，Actions 會自動執行部署。
 
-## 部署提示
-1. 將整個資料夾內容上傳到 GitHub repository 根目錄。
-2. 確認 `.github/workflows/pages.yml` 已上傳。
-3. 到 **Settings → Pages → Source** 選擇 **GitHub Actions**。
-4. 提交後會自動執行 `Deploy currency converter to GitHub Pages`。
-
-若要手動觸發，可到 **Actions** 裡執行 workflow。
+專案包含 `index.html`、`styles.css`、`app.js`、`manifest.webmanifest`、`sw.js`、`data/`、`scripts/`、`.github/workflows/pages.yml` 與 `icons/`。

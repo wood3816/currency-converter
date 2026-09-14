@@ -227,3 +227,208 @@ body::after {
   .rate-strip { min-height: 64px; }
   .amount-display { font-size: 96px; }
 }
+
+/* v1.2.4 — layout tuned to the final approved iPhone mockup */
+/* Avoid double-counting the iPhone bottom safe area. */
+.app-shell {
+  padding-bottom: 0;
+}
+
+/* Compact header while retaining the iPhone safe area. */
+.topbar {
+  min-height: calc(72px + env(safe-area-inset-top));
+  padding: calc(3px + env(safe-area-inset-top)) 12px 5px;
+  grid-template-columns: 50px minmax(0, 1fr) 50px;
+}
+.title-line h1 {
+  font-size: clamp(25px, 7vw, 32px);
+}
+.version-chip {
+  font-size: clamp(11px, 3vw, 13px);
+  padding: 4px 9px;
+}
+.subtitle {
+  margin-top: 1px;
+  font-size: clamp(11px, 3.2vw, 14px);
+}
+
+/* Main layout proportions follow the approved mockup: narrow currency column, wide amount column. */
+.content {
+  width: min(620px, 100%);
+  padding: 6px 10px max(7px, env(safe-area-inset-bottom));
+  grid-template-rows: 132px 132px 66px minmax(0, 1fr);
+  gap: 7px;
+}
+.money-card {
+  grid-template-rows: 31px minmax(0, 1fr);
+  gap: 3px;
+  padding: 7px 10px 9px;
+  border-radius: 17px;
+}
+.money-labels,
+.money-row {
+  grid-template-columns: minmax(104px, 30%) minmax(0, 1fr);
+  column-gap: 10px;
+}
+.money-labels {
+  font-size: clamp(16px, 4.5vw, 21px);
+}
+
+.currency-button {
+  padding: 6px 28px 6px 9px;
+  row-gap: 2px;
+  border-radius: 11px;
+}
+.currency-flag {
+  font-size: clamp(27px, 7vw, 36px);
+}
+.currency-name {
+  font-size: clamp(17px, 4.6vw, 22px);
+  line-height: 1.03;
+}
+.currency-name.long {
+  font-size: clamp(13px, 3.55vw, 17px);
+}
+.currency-code {
+  font-size: clamp(14px, 3.9vw, 19px);
+  line-height: 1;
+}
+.currency-chevron {
+  right: 8px;
+  font-size: clamp(17px, 4.7vw, 22px);
+}
+
+/* Both amount boxes stay neon-blue as in the approved visual. */
+.amount-display,
+.amount-display.active {
+  border: 2px solid var(--blue);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 14%, transparent),
+              inset 0 0 18px color-mix(in srgb, var(--blue) 6%, transparent);
+  padding-inline: 13px;
+  text-align: right;
+  font-size: 106px;
+  font-weight: 800;
+  letter-spacing: -.045em;
+}
+
+/* Keep source information compact and readable instead of forcing 3–4 text lines. */
+.rate-strip {
+  grid-template-columns: 40px minmax(0, 1fr) minmax(102px, 29%);
+  min-height: 66px;
+  padding: 5px 9px;
+  gap: 7px;
+  border-radius: 14px;
+}
+.source-icon {
+  width: 38px;
+  height: 38px;
+}
+.source-icon svg {
+  width: 35px;
+  height: 35px;
+}
+.source-copy {
+  font-size: clamp(9px, 2.55vw, 11px);
+  line-height: 1.32;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+.source-copy > div {
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+.source-meta {
+  max-width: none;
+  font-size: clamp(8px, 2.25vw, 10px);
+  line-height: 1.3;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+.status-line {
+  margin-top: 2px;
+  gap: 5px;
+}
+.status-dot {
+  width: 9px;
+  height: 9px;
+}
+
+/* Large keypad fills the remaining height and preserves the approved four-column proportions. */
+.keypad {
+  gap: 7px;
+  margin: 0;
+  align-self: stretch;
+}
+.keypad button {
+  border-width: 1.5px;
+  border-radius: 14px;
+  font-size: clamp(39px, 11.2vw, 59px);
+}
+.function-symbol {
+  font-size: clamp(35px, 9.2vw, 51px);
+}
+.unit-symbol {
+  font-size: clamp(29px, 7.8vw, 41px);
+}
+.key-caption {
+  font-size: clamp(10px, 2.75vw, 14px);
+}
+.clear-symbol {
+  font-size: clamp(48px, 13vw, 70px);
+}
+
+/* Primary target: modern 6–6.7 inch phones, including the user's iPhone viewport. */
+@media (max-width: 430px) {
+  .content {
+    padding-left: 10px;
+    padding-right: 10px;
+    grid-template-rows: 132px 132px 66px minmax(0, 1fr);
+    gap: 7px;
+  }
+  .money-labels,
+  .money-row {
+    grid-template-columns: minmax(102px, 30%) minmax(0, 1fr);
+    gap: 9px;
+  }
+  .currency-button {
+    padding: 5px 27px 5px 8px;
+  }
+  .currency-flag { font-size: 29px; }
+  .currency-name { font-size: 18px; }
+  .currency-name.long { font-size: 14px; }
+  .currency-code { font-size: 16px; }
+  .amount-display,
+  .amount-display.active { font-size: 100px; }
+  .rate-strip {
+    grid-template-columns: 38px minmax(0, 1fr) 105px;
+    gap: 6px;
+  }
+  .source-copy { font-size: 10px; }
+  .source-meta { font-size: 9px; }
+}
+
+/* Short screens: compress the information blocks first, not the keypad. */
+@media (max-height: 760px) {
+  .topbar {
+    min-height: calc(66px + env(safe-area-inset-top));
+    padding-bottom: 3px;
+  }
+  .content {
+    grid-template-rows: 116px 116px 60px minmax(0, 1fr);
+    gap: 5px;
+    padding-top: 4px;
+  }
+  .money-card {
+    grid-template-rows: 27px minmax(0, 1fr);
+    padding: 5px 8px 7px;
+  }
+  .rate-strip {
+    min-height: 60px;
+    padding-block: 4px;
+  }
+  .amount-display,
+  .amount-display.active {
+    font-size: 92px;
+  }
+  .keypad { gap: 5px; }
+}

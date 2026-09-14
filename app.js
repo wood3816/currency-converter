@@ -1,12 +1,12 @@
 (() => {
   'use strict';
 
-  const APP_VERSION = '1.2.2';
+  const APP_VERSION = '1.2.4';
   const RATE_TTL_MS = 2 * 60 * 60 * 1000;
-  const CACHE_KEY = 'fx-rate-cache-gh-v3';
-  const LEGACY_CACHE_KEY = 'fx-rate-cache-gh-v2';
-  const PREF_KEY = 'fx-user-prefs-gh-v2';
-  const LEGACY_PREF_KEY = 'fx-user-prefs-gh-v1';
+  const CACHE_KEY = 'fx-rate-cache-gh-v4';
+  const LEGACY_CACHE_KEY = 'fx-rate-cache-gh-v3';
+  const PREF_KEY = 'fx-user-prefs-gh-v3';
+  const LEGACY_PREF_KEY = 'fx-user-prefs-gh-v2';
   const PRIMARY_API_URL = './data/rates.json';
   const DIRECT_CBC_FALLBACK = 'https://api.frankfurter.dev/v2/providers/cbc/rates?base=USD';
   const DIRECT_FRANKFURTER = 'https://api.frankfurter.dev/v2/rates?base=USD';
@@ -280,7 +280,7 @@
   function fitAmountsTogether() {
     if (!els.fromAmount.clientWidth || !els.toAmount.clientWidth) return;
     const baseHeight = Math.min(els.fromAmount.clientHeight, els.toAmount.clientHeight);
-    const max = Math.min(110, Math.max(70, baseHeight * .86));
+    const max = Math.min(118, Math.max(72, baseHeight * .90));
     const fromFit = maxFittingFont(els.fromAmount, max);
     const toFit = maxFittingFont(els.toAmount, max);
     const shared = Math.min(fromFit, toFit);

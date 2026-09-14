@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fx-mobile-shell-v1.2.2-github-pages';
+const CACHE_NAME = 'fx-mobile-shell-v1.2.4-github-pages';
 const APP_SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'

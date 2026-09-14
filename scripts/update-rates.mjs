@@ -43,7 +43,7 @@ async function jsonFetch(url, label) {
   const res = await fetch(url, {
     headers: {
       Accept: 'application/json',
-      'User-Agent': 'fx-mobile-github-pages/1.2.2'
+      'User-Agent': 'fx-mobile-github-pages/1.2.4'
     }
   });
   if (!res.ok) throw new Error(`${label} HTTP ${res.status}`);
