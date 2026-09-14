@@ -1,4 +1,4 @@
-# 手機貨幣轉換器 v1.2.0 — GitHub Pages 版
+# 手機貨幣轉換器 v1.2.1 — GitHub Pages 版
 
 這一版已從 **Netlify** 改成 **GitHub Pages + GitHub Actions** 管道，不再需要 Netlify Function，也不會出現 Powered by Netlify 徽章。
 
@@ -39,3 +39,9 @@
 - `.github/workflows/pages.yml`：每 2 小時更新＋GitHub Pages 部署
 - `sw.js`：PWA 離線快取
 - `manifest.webmanifest`：PWA 設定
+
+## v1.2.1 GitHub Actions 修正
+- 修正 CBC provider API 路徑，改用 Frankfurter 官方文件的 `/v2/providers/cbc/rates?base=USD`。
+- 若 CBC provider 暫時失效，不再讓整個 Pages build 直接失敗，會先以 Frankfurter 一般匯率備援。
+- 若遠端來源暫時全部失效且 repository 已有可用 `data/rates.json`，會沿用舊資料完成部署。
+- 瀏覽器端直接備援 URL 同步修正。
