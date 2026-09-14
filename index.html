@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#103f78" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="匯率換算" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>貨幣轉換器</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+  <link rel="icon" href="./icons/icon-192.png" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" type="button" aria-label="開啟功能選單">☰</button>
+      <div class="title-wrap">
+        <div class="title-line">
+          <h1>貨幣轉換器</h1>
+          <span class="version-chip">v1.2.0</span>
+        </div>
+        <div class="subtitle">簡單・快速・離線可用</div>
+      </div>
+      <button class="icon-btn refresh-icon" id="refreshBtn" type="button" aria-label="更新匯率">↻</button>
+    </header>
+
+    <main class="content">
+      <section class="money-card" aria-label="從貨幣">
+        <div class="money-labels"><strong>從貨幣</strong><span>金額</span></div>
+        <div class="money-row">
+          <select id="fromCurrency" class="currency-select-state" aria-hidden="true" tabindex="-1"></select>
+          <button id="fromCurrencyBtn" class="currency-button" type="button" aria-label="選擇從貨幣">
+            <span class="currency-flag" id="fromFlag">🇯🇵</span>
+            <span class="currency-copy"><span class="currency-name" id="fromName">日圓</span><span class="currency-code" id="fromCode">(JPY)</span></span>
+            <span class="currency-chevron" aria-hidden="true">▾</span>
+          </button>
+          <button id="fromAmount" class="amount-display active" type="button" aria-label="輸入從貨幣金額">100,000</button>
+        </div>
+      </section>
+
+      <section class="money-card" aria-label="到貨幣">
+        <div class="money-labels"><strong>到貨幣</strong><span>轉換結果</span></div>
+        <div class="money-row">
+          <select id="toCurrency" class="currency-select-state" aria-hidden="true" tabindex="-1"></select>
+          <button id="toCurrencyBtn" class="currency-button" type="button" aria-label="選擇到貨幣">
+            <span class="currency-flag" id="toFlag">🇹🇼</span>
+            <span class="currency-copy"><span class="currency-name" id="toName">新臺幣</span><span class="currency-code" id="toCode">(TWD)</span></span>
+            <span class="currency-chevron" aria-hidden="true">▾</span>
+          </button>
+          <button id="toAmount" class="amount-display" type="button" aria-label="輸入到貨幣金額">0</button>
+        </div>
+      </section>
+
+      <section class="rate-strip" aria-label="匯率資料狀態">
+        <div class="source-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img" focusable="false">
+            <path d="M8 25h48L32 10 8 25Z" fill="currentColor"/>
+            <rect x="11" y="28" width="42" height="5" rx="1.5" fill="currentColor"/>
+            <rect x="14" y="33" width="6" height="17" rx="1.5" fill="currentColor"/>
+            <rect x="24" y="33" width="6" height="17" rx="1.5" fill="currentColor"/>
+            <rect x="34" y="33" width="6" height="17" rx="1.5" fill="currentColor"/>
+            <rect x="44" y="33" width="6" height="17" rx="1.5" fill="currentColor"/>
+            <rect x="8" y="50" width="48" height="5" rx="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="source-copy">
+          <div><b>匯率來源：台灣中央銀行（主流貨幣）</b></div>
+          <div>其他幣別：Frankfurter 公開匯率 API</div>
+        </div>
+        <div class="source-meta">
+          <div id="checkedLine">更新：—</div>
+          <div class="status-line"><span id="statusDot" class="status-dot checking"></span><strong id="statusText">檢查中</strong></div>
+        </div>
+      </section>
+
+      <section class="keypad" aria-label="自訂數字鍵盤">
+        <button data-key="7" data-repeat="true" aria-label="7">7</button>
+        <button data-key="8" data-repeat="true" aria-label="8">8</button>
+        <button data-key="9" data-repeat="true" aria-label="9">9</button>
+        <button data-key="back" data-repeat="true" class="function-key danger-soft" aria-label="刪除一位；長按連續刪除"><span class="backspace-shape">×</span><span class="key-caption">刪除</span></button>
+
+        <button data-key="4" data-repeat="true" aria-label="4">4</button>
+        <button data-key="5" data-repeat="true" aria-label="5">5</button>
+        <button data-key="6" data-repeat="true" aria-label="6">6</button>
+        <button data-key="swap" class="function-key blue-soft" aria-label="交換幣別"><span class="function-symbol">⇅</span><span class="key-caption">交換幣別</span></button>
+
+        <button data-key="1" data-repeat="true" aria-label="1">1</button>
+        <button data-key="2" data-repeat="true" aria-label="2">2</button>
+        <button data-key="3" data-repeat="true" aria-label="3">3</button>
+        <button data-key="unit" class="function-key blue-soft unit-key" aria-label="乘除單位數"><span class="unit-symbol">× ÷</span><span class="key-caption">乘除單位數</span></button>
+
+        <button data-key="0" data-repeat="true" aria-label="0">0</button>
+        <button data-key="00" data-repeat="true" aria-label="00">00</button>
+        <button data-key="." aria-label="小數點">.</button>
+        <button data-key="clear" data-repeat="true" class="function-key clear-key" aria-label="清除全部；長按持續清除"><span class="clear-symbol">C</span></button>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="menuDialog" class="drawer-dialog">
+    <aside class="drawer" aria-label="功能選單">
+      <div class="drawer-head">
+        <div class="drawer-brand">
+          <div class="brand-mark">⇄</div>
+          <div><h2>貨幣轉換器</h2><p id="versionText">版本 v1.2.0</p></div>
+        </div>
+        <button type="button" id="menuClose" class="close-btn" aria-label="關閉">✕</button>
+      </div>
+
+      <nav class="drawer-nav" aria-label="主要功能">
+        <button id="menuHome" type="button"><span>⌂</span><b>首頁</b><em>目前換算畫面</em></button>
+        <button id="menuFavorites" type="button"><span>★</span><b>常用幣別</b><em>快速選擇幣別</em></button>
+        <button id="menuAdd" type="button"><span>＋</span><b>新增幣別</b><em>新增或移除可用幣別</em></button>
+        <button id="menuRates" type="button"><span>≡</span><b>匯率列表</b><em>查看新臺幣參考匯率</em></button>
+        <button id="menuRefresh" type="button"><span>↻</span><b>更新匯率</b><em>立即檢查最新資料</em></button>
+      </nav>
+
+      <section class="theme-section" aria-labelledby="themeTitle">
+        <h3 id="themeTitle">主題模式</h3>
+        <label class="theme-option"><span class="theme-icon">☀</span><span>淺色模式</span><input type="radio" name="theme" value="light" /></label>
+        <label class="theme-option"><span class="theme-icon">☾</span><span>深色模式</span><input type="radio" name="theme" value="dark" /></label>
+        <label class="theme-option"><span class="theme-icon">▣</span><span>跟隨系統</span><input type="radio" name="theme" value="system" /></label>
+      </section>
+
+      <p class="drawer-note">匯率每 2 小時檢查一次；離線時使用最後成功快取的匯率。</p>
+    </aside>
+  </dialog>
+
+  <dialog id="currencyDialog" class="sheet-dialog">
+    <div class="sheet">
+      <div class="sheet-head">
+        <div><h2>新增／管理幣別</h2><p>勾選要出現在主畫面選單的幣別。</p></div>
+        <button type="button" id="currencyClose" class="close-btn" aria-label="關閉">✕</button>
+      </div>
+      <input id="currencySearch" class="search-input" type="search" placeholder="搜尋：日圓、USD、韓元…" autocomplete="off" />
+      <div id="currencyList" class="currency-list"></div>
+      <div class="sheet-actions">
+        <button id="currencyReset" class="ghost-btn" type="button">恢復預設</button>
+        <button id="currencySave" class="primary-btn" type="button">完成</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="favoriteDialog" class="sheet-dialog">
+    <div class="sheet compact-sheet">
+      <div class="sheet-head">
+        <div><h2 id="favoriteTitle">選擇幣別</h2><p id="favoriteHint">選擇要套用的幣別。</p></div>
+        <button type="button" id="favoriteClose" class="close-btn" aria-label="關閉">✕</button>
+      </div>
+      <div id="favoriteGrid" class="favorite-grid"></div>
+    </div>
+  </dialog>
+
+  <dialog id="rateDialog" class="sheet-dialog">
+    <div class="sheet">
+      <div class="sheet-head">
+        <div><h2>匯率列表</h2><p>以 1 單位外幣換算新臺幣，僅供參考。</p></div>
+        <button type="button" id="rateClose" class="close-btn" aria-label="關閉">✕</button>
+      </div>
+      <div id="rateList" class="rate-list"></div>
+    </div>
+  </dialog>
+
+  <dialog id="unitDialog" class="sheet-dialog">
+    <div class="sheet compact-sheet">
+      <div class="sheet-head">
+        <div><h2>乘除單位數</h2><p>以「轉換後幣別」的金額為基準進行乘除。</p></div>
+        <button type="button" id="unitClose" class="close-btn" aria-label="關閉">✕</button>
+      </div>
+      <div class="unit-panel">
+        <div class="unit-base-line"><span id="unitBaseLabel">轉換後金額：</span><strong id="unitBase">0</strong></div>
+        <div class="unit-row">
+          <div class="unit-op-wrap">
+            <button id="unitOpBtn" class="unit-op-button" type="button" aria-label="選擇乘除方式" aria-haspopup="listbox" aria-expanded="false">
+              <span id="unitOpLabel">× 乘以</span><span class="unit-op-chevron" aria-hidden="true">⌄</span>
+            </button>
+            <div id="unitOpMenu" class="unit-op-menu" role="listbox" aria-label="乘除方式" hidden>
+              <button type="button" class="unit-op-option selected" role="option" aria-selected="true" data-unit-op="*">× 乘以</button>
+              <button type="button" class="unit-op-option" role="option" aria-selected="false" data-unit-op="/">÷ 除以</button>
+            </div>
+          </div>
+          <input id="unitCount" class="unit-input" inputmode="decimal" type="text" placeholder="輸入單位數" autocomplete="off" />
+        </div>
+        <div class="unit-result-line">結果：<strong id="unitResult">0</strong></div>
+        <button id="unitApply" class="primary-btn unit-apply" type="button">帶入轉換後幣別</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>

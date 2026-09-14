@@ -1,0 +1,26 @@
+{
+  "name": "手機貨幣轉換器",
+  "short_name": "匯率換算",
+  "description": "主流幣別以台灣中央銀行資料為主、其他幣別使用 Frankfurter；透過 GitHub Actions 每 2 小時更新匯率，並支援離線快取、深淺色主題與手機單畫面操作。",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#eef4f9",
+  "theme_color": "#103f78",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

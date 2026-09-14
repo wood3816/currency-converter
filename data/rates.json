@@ -1,0 +1,10 @@
+{
+  "base": "USD",
+  "rates": {},
+  "cbcDate": null,
+  "frankfurterDate": null,
+  "cbcMode": "pending-first-deploy",
+  "source": "等待 GitHub Actions 第一次取得匯率",
+  "generatedAt": 0,
+  "generatedAtIso": null
+}
